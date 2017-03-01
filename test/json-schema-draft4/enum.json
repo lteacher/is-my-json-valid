@@ -37,6 +37,27 @@
         ]
     },
     {
+        "description": "custom typed enum is not type validated",
+        "schema": {"enum": [1, 2, "three"]},
+        "tests": [
+            {
+                "description": "one of the enum is valid",
+                "data": 1,
+                "valid": true
+            },
+            {
+                "description": "something else is invalid",
+                "data": null,
+                "valid": false
+            },
+            {
+                "description": "something else is valid",
+                "data": "three",
+                "valid": true
+            }
+        ]
+    },
+    {
         "description": "enums in properties",
         "schema": {
            "type":"object",

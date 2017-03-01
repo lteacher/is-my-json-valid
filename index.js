@@ -176,11 +176,16 @@ var compile = function(schema, cache, root, reporter, opts) {
 
     var valid = [].concat(type)
       .map(function(t) {
-        if (t && !types.hasOwnProperty(t)) {
-          throw new Error('Unknown type: ' + t)
+        var validator = types[t || 'any']
+        var isEnum = !!node.enum
+
+        if (!validator) {
+          if (!isEnum) throw new Error('Unknown type: ' + t)
+
+          return true
         }
 
-        return types[t || 'any'](name)
+        return validator(name)
       })
       .join(' || ') || 'true'
 
